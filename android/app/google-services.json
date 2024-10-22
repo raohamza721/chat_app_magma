@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "211324200566",
+    "project_id": "talkshalk-604da",
+    "storage_bucket": "talkshalk-604da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:211324200566:android:ce70e6ab01d1b20bca2157",
+        "android_client_info": {
+          "package_name": "com.example.talk_shalk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDY9J8cVc69mBXq4C5RuqXbFMyJKg4MqTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

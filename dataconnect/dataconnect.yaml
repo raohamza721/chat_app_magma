@@ -1,0 +1,12 @@
+specVersion: "v1beta"
+serviceId: "talk_shalk"
+location: "us-central1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "fdcdb"
+      cloudSql:
+        instanceId: "talk_shalk-fdc"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]
