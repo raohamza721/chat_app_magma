@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:talk_shalk/controllers/chats_controllers.dart';
 import 'package:talk_shalk/screens/friends_screen.dart';
 import 'inbox_screen.dart';
+import 'package:intl/intl.dart';
 
 class ChatsScreen extends StatelessWidget {
   final ChatsController chatsController = Get.put(ChatsController());
@@ -12,50 +14,93 @@ class ChatsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: const Text("Chats"),
+        backgroundColor: Colors.green,
+        title: const Text("Chats",style: TextStyle(
+          color: Colors.white ,
+        ),),
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
+            icon: const Icon(Icons.search,color: Colors.white,),
             onPressed: () => chatsController.signOut(),
           ),
-          IconButton(
-            icon: const Icon(Icons.person_add_sharp),
-            onPressed: () => Get.to(FriendsScreen()),
-          ),
+          // IconButton(
+          //   icon: const Icon(Icons.person_add_sharp),
+          //   onPressed: () => Get.to(const FriendsScreen()),
+          // ),
         ],
       ),
-      body: Obx(() {
-        if (chatsController.chats.isEmpty) {
-          return const Center(child: Text("No active chats"));
-        }
+      drawer: Drawer(
 
-        return ListView.builder(
-          itemCount: chatsController.chats.length,
-          itemBuilder: (context, index) {
-            var chatData = chatsController.chats[index].data() as Map<String, dynamic>;
-            String chatId = chatData['chatId'];
-            String lastMessage = chatData['lastMessage'];
-            String user1Id = chatData['user1Id'];
-            String user2Id = chatData['user2Id'];
-            String currentUserId = chatsController.currentUser!.uid;
-            String otherUserName = chatData['otherUserName'].toString();
-            String otherPhotoUrl = chatData['otherUserPhotoUrl'].toString();
+        child: ListView(
+          children: [
+            // DrawerHeader(child: Image.asset('assets/images/icons/splashlogo.png'))
+          ],
+        ),
+      ),
+      
+      body: Container(
+        height: double.infinity,
+        child: Stack(
+          children: [
+            Image.asset(
+              fit: BoxFit.fitHeight,
+                'assets/images/icons/imagechats.png'),
+            Obx(() {
+              if (chatsController.chats.isEmpty) {
+                return const Center(child: Text("No active chats"));
+              }
 
-            String otherUserId = currentUserId == user1Id ? user2Id : user1Id;
+              return ListView.builder(
+                itemCount: chatsController.chats.length,
+                itemBuilder: (context, index) {
+                  var chatData = chatsController.chats[index].data() as Map<String, dynamic>;
+                  String chatId = chatData['chatId'];
+                  String lastMessage = chatData['lastMessage'];
+                  String user1Id = chatData['user1Id'];
+                  String user2Id = chatData['user2Id'];
+                  String currentUserId = chatsController.currentUser!.uid;
+                  String otherUserName = chatData['otherUserName'].toString();
+                  String otherPhotoUrl = chatData['otherUserPhotoUrl'].toString();
+                  String otherUserId = currentUserId == user1Id ? user2Id : user1Id;
 
-            return ListTile(
-              leading: Image.network(otherPhotoUrl),
-              title: Text(otherUserName),
-              subtitle: Text(lastMessage),
-              
-              onTap: () {
-                Get.to(ChatScreen(otherUserId: otherUserId, otherUserName: otherUserName, otherPhotoUrl: otherPhotoUrl ));
-              },
-            );
-          },
-        );
-      }),
+                  // Convert Firestore timestamp to DateTime
+                  Timestamp lastMessageTimestamp = chatData['lastMessageTime'] as Timestamp;
+                  DateTime lastMessageTime = lastMessageTimestamp.toDate();
+
+                  String formattedTime = DateFormat('h:mm a').format(lastMessageTime);
+
+                  return ListTile(
+                    tileColor: Colors.greenAccent[50],
+                    leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: Image.network(otherPhotoUrl)),
+                    title: Text(otherUserName),
+                    subtitle: Text(lastMessage,style: TextStyle(
+                        color: Colors.grey
+                    ),),
+                    trailing: Text(formattedTime,style: TextStyle(
+                        color: Colors.grey[400]
+                    ),),
+
+                    onTap: () {
+                      Get.to(ChatScreen(otherUserId: otherUserId, otherUserName: otherUserName, otherPhotoUrl: otherPhotoUrl ));
+                    },
+                  );
+                },
+              );
+            }),
+          ]
+
+        ),
+      ),
+
+
+
+      floatingActionButton: FloatingActionButton  (onPressed: () => Get.to(const FriendsScreen()),
+          backgroundColor: Colors.green,
+          child: const Icon(Icons.person_add_sharp,color: Colors.black,)),
     );
   }
 }
