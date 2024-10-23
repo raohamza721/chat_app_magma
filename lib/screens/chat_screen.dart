@@ -33,10 +33,53 @@ class ChatsScreen extends StatelessWidget {
       ),
       drawer: Drawer(
 
-        child: ListView(
-          children: [
-            // DrawerHeader(child: Image.asset('assets/images/icons/splashlogo.png'))
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView(
+
+            children: const [
+              // DrawerHeader(child: Image.asset('assets/images/icons/splashlogo.png'))
+              ListTile(
+                tileColor: Colors.black,
+                leading: Icon(Icons.person_add,color: Colors.white,),
+                title: Text('Friends',style: TextStyle(
+                  color: Colors.white
+                ),),
+              ),
+              const SizedBox(height: 5 ),
+              ListTile(
+                tileColor: Colors.black,
+                leading: Icon(Icons.chat,
+                  color: Colors.white,
+                ),
+                title: Text('Chats',
+                  style: TextStyle(
+                  color: Colors.white,)
+                  ,),
+              ),
+              const SizedBox(height: 5 ),
+
+              ListTile(
+                tileColor: Colors.black,
+                leading: Icon(Icons.settings,
+                  color: Colors.white,
+                ),
+                title: Text('SETTING',  style: TextStyle(
+                  color: Colors.white,)),
+              ),
+              const SizedBox(height: 5 ),
+
+              ListTile(
+                tileColor: Colors.black,
+
+                leading: Icon(Icons.logout,
+                  color: Colors.white,
+                ),
+                title: Text('LOGOUT',  style: TextStyle(
+                  color: Colors.white,)),
+              )
+            ],
+          ),
         ),
       ),
       
