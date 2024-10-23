@@ -4,7 +4,7 @@ import 'package:talk_shalk/controllers/friends_controller.dart';
 import 'inbox_screen.dart';
 
 class FriendsScreen extends StatefulWidget {
-  FriendsScreen({super.key});
+  const FriendsScreen({super.key});
 
   @override
   _FriendsScreenState createState() => _FriendsScreenState();

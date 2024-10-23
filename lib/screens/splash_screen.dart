@@ -20,29 +20,26 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
 
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Get.offAll(LoginScreen());  // Navigates to HomeScreen and clears the stack
     });
 
 
     return Scaffold(
-      body: Center(
-        child: Center(child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 100,
-                width: 100,
-                child: Image.asset('assets/images/icons/splashlogo.png')),
-            const SizedBox(height: 10,),
-            const Text('Talk Shalk',style: TextStyle(
-              color: Colors.green,
-              fontSize: 20,
-              fontWeight: FontWeight.bold
-            ),)
-          ],
-        )),
-      ),
+      body: Center(child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+              height: 120, width: 120,
+      child: Image.asset('assets/images/icons/splashlogo.png')),
+          const SizedBox(height: 10,),
+          const Text('Talk Shalk',style: TextStyle(
+            color: Colors.green,
+            fontSize: 20,
+            fontWeight: FontWeight.bold
+          ),)
+        ],
+      )),
 
     );
   }
