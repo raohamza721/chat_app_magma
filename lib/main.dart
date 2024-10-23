@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:talk_shalk/controllers/signing_screen_controlleer.dart';
+import 'package:talk_shalk/screens/splash_screen.dart';
 
 import 'screens/login_screen.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       initialBinding: BindingsBuilder(() {
         Get.put(AuthController());
       }),
-      home: LoginScreen(),
+      home: const SplashScreen(),
     );
   }
 }

@@ -27,9 +27,21 @@ class _SplashScreenState extends State<SplashScreen> {
 
     return Scaffold(
       body: Center(
-        child: SizedBox(
-          height: 90,width: 90,
-            child: Center(child: Image.asset('assets/images/icons/splashlogo.png'))),
+        child: Center(child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 100,
+                width: 100,
+                child: Image.asset('assets/images/icons/splashlogo.png')),
+            const SizedBox(height: 10,),
+            const Text('Talk Shalk',style: TextStyle(
+              color: Colors.green,
+              fontSize: 20,
+              fontWeight: FontWeight.bold
+            ),)
+          ],
+        )),
       ),
 
     );

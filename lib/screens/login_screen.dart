@@ -8,7 +8,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:  Colors.blueAccent,
+      backgroundColor:  Colors.green,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -25,7 +25,7 @@ class LoginScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.blueAccent, Colors.purpleAccent],
+            colors: [Colors.green, Colors.greenAccent],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -60,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                   },
                   child: const Text('Sign in with Google',
                     style: TextStyle(
-                      color: Colors.redAccent,
+                      color: Colors.green,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
