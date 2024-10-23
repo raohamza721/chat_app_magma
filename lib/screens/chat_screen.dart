@@ -83,60 +83,64 @@ class ChatsScreen extends StatelessWidget {
         ),
       ),
       
-      body: Container(
-        height: double.infinity,
-        child: Stack(
-          children: [
-            Image.asset(
-              fit: BoxFit.fitHeight,
-                'assets/images/icons/imagechats.png'),
-            Obx(() {
-              if (chatsController.chats.isEmpty) {
-                return const Center(child: Text("No active chats"));
-              }
+      body: Stack(
+        children: [
+          Image.asset(
+            fit: BoxFit.cover,
+              'assets/images/icons/imagechats.png'),
+          Obx(() {
+            if (chatsController.chats.isEmpty) {
+              return const Center(child: Text("No active chats"));
+            }
 
-              return ListView.builder(
-                itemCount: chatsController.chats.length,
-                itemBuilder: (context, index) {
-                  var chatData = chatsController.chats[index].data() as Map<String, dynamic>;
-                  String chatId = chatData['chatId'];
-                  String lastMessage = chatData['lastMessage'];
-                  String user1Id = chatData['user1Id'];
-                  String user2Id = chatData['user2Id'];
-                  String currentUserId = chatsController.currentUser!.uid;
-                  String otherUserName = chatData['otherUserName'].toString();
-                  String otherPhotoUrl = chatData['otherUserPhotoUrl'].toString();
-                  String otherUserId = currentUserId == user1Id ? user2Id : user1Id;
+            return ListView.builder(
+              itemCount: chatsController.chats.length,
+              itemBuilder: (context, index) {
+                var chatData = chatsController.chats[index].data() as Map<String, dynamic>;
+                String chatId = chatData['chatId'];
+                String lastMessage = chatData['lastMessage'];
+                String user1Id = chatData['user1Id'];
+                String user2Id = chatData['user2Id'];
+                String currentUserId = chatsController.currentUser!.uid;
+                String otherUserName = chatData['otherUserName'].toString();
+                String otherPhotoUrl = chatData['otherUserPhotoUrl'].toString();
+                String otherUserId = currentUserId == user1Id ? user2Id : user1Id;
 
-                  // Convert Firestore timestamp to DateTime
-                  Timestamp lastMessageTimestamp = chatData['lastMessageTime'] as Timestamp;
-                  DateTime lastMessageTime = lastMessageTimestamp.toDate();
+                // Convert Firestore timestamp to DateTime
+                Timestamp lastMessageTimestamp = chatData['lastMessageTime'] as Timestamp;
+                DateTime lastMessageTime = lastMessageTimestamp.toDate();
 
-                  String formattedTime = DateFormat('h:mm a').format(lastMessageTime);
+                String formattedTime = DateFormat('h:mm a').format(lastMessageTime);
 
-                  return ListTile(
-                    tileColor: Colors.greenAccent[50],
-                    leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
-                        child: Image.network(otherPhotoUrl)),
-                    title: Text(otherUserName),
-                    subtitle: Text(lastMessage,style: TextStyle(
-                        color: Colors.grey
-                    ),),
-                    trailing: Text(formattedTime,style: TextStyle(
-                        color: Colors.grey[400]
-                    ),),
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    elevation: 3,
+                    color: Colors.grey[200],
+                    child: ListTile(
+                      tileColor: Colors.greenAccent[50],
+                      leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: Image.network(otherPhotoUrl)),
+                      title: Text(otherUserName),
+                      subtitle: Text(lastMessage,style: TextStyle(
+                          color: Colors.grey
+                      ),),
+                      trailing: Text(formattedTime,style: TextStyle(
+                          color: Colors.grey[400]
+                      ),),
 
-                    onTap: () {
-                      Get.to(ChatScreen(otherUserId: otherUserId, otherUserName: otherUserName, otherPhotoUrl: otherPhotoUrl ));
-                    },
-                  );
-                },
-              );
-            }),
-          ]
+                      onTap: () {
+                        Get.to(ChatScreen(otherUserId: otherUserId, otherUserName: otherUserName, otherPhotoUrl: otherPhotoUrl ));
+                      },
+                    ),
+                  ),
+                );
+              },
+            );
+          }),
+        ]
 
-        ),
       ),
 
 
