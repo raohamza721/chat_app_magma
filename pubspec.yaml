@@ -41,6 +41,10 @@ dependencies:
   google_sign_in:
   get:
   intl:
+  font_awesome_flutter:
+
+
+
 
 dev_dependencies:
   flutter_test:

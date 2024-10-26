@@ -9,80 +9,130 @@ class ChatScreen extends StatelessWidget {
 
   final InboxController chatController = Get.put(InboxController());
 
-  ChatScreen({super.key, required this.otherUserId, required this.otherUserName, required this.otherPhotoUrl,});
+  ChatScreen({super.key, required this.otherUserId, required this.otherUserName, required this.otherPhotoUrl});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text('Chat with $otherUserName'),
-      ),
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
-            // StreamBuilder to listen for chat messages
-            child: StreamBuilder(
-              stream: chatController.getMessages(otherUserId),
-              builder: (context, AsyncSnapshot snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
-                var messages = snapshot.data.docs;
-
-                return ListView.builder(
-                  reverse: true,
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) {
-                    var message = messages[index];
-                    bool isSender = message['senderId'] == chatController.authController.firebaseUser.value!.uid;
-
-                    return Align(
-                      alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 15),
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 10),
-                        decoration: BoxDecoration(
-                          color: isSender ? Colors.blue : Colors.grey[300],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text( message['text'], style: TextStyle(
-                              color: isSender ? Colors.white : Colors.black),
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
+          // Background Image
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/icons/imagechats.png',
+              fit: BoxFit.cover,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  // TextField for message input
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      controller: chatController.messageController,
-                      decoration: const InputDecoration(
-                          hintText: 'Enter message',
-                          border: OutlineInputBorder()),
-
+          // Main Chat UI
+          Column(
+            children: [
+              AppBar(
+                backgroundColor: Colors.green[500],
+                title: Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(otherPhotoUrl),
+                      radius: 20,
                     ),
-                  ),
+                    const SizedBox(width: 10),
+                    Text(
+                      otherUserName,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-                IconButton(
-                  icon: const Icon(Icons.send),
-                  onPressed: () => chatController.sendMessage(otherUserId, otherUserName, otherPhotoUrl,),
-                )
-              ],
-            ),
+              ),
+              Expanded(
+                child: StreamBuilder(
+                  stream: chatController.getMessages(otherUserId),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    var messages = snapshot.data.docs;
+
+                    return ListView.builder(
+                      reverse: true,
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) {
+                        var message = messages[index];
+                        bool isSender = message['senderId'] == chatController.authController.firebaseUser.value!.uid;
+
+                        return Align(
+                          alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                            margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                            decoration: BoxDecoration(
+                              color: isSender ? Colors.green : Colors.grey[300],
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(isSender ? 12 : 0),
+                                topRight: Radius.circular(isSender ? 0 : 12),
+                                bottomLeft: const Radius.circular(12),
+                                bottomRight: const Radius.circular(12),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Text(
+                              message['text'],
+                              style: TextStyle(
+                                color: isSender ? Colors.white : Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: TextField(
+                          controller: chatController.messageController,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter message',
+                            hintStyle: TextStyle(color: Colors.grey),
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    CircleAvatar(
+                      backgroundColor: Colors.green,
+                      radius: 24,
+                      child: IconButton(
+                        icon: const Icon(Icons.send, color: Colors.white),
+                        onPressed: () => chatController.sendMessage(otherUserId, otherUserName, otherPhotoUrl),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),

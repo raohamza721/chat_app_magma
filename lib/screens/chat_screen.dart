@@ -1,98 +1,105 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:talk_shalk/controllers/chats_controllers.dart';
 import 'package:talk_shalk/screens/friends_screen.dart';
 import 'inbox_screen.dart';
-import 'package:intl/intl.dart';
 
 class ChatsScreen extends StatelessWidget {
   final ChatsController chatsController = Get.put(ChatsController());
 
-   ChatsScreen({super.key});
+  ChatsScreen({super.key,});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        backgroundColor: Colors.green,
-        title: const Text("Chats",style: TextStyle(
-          color: Colors.white ,
-        ),),
+        backgroundColor: Colors.green[500],
+        title: const Text("Chats",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.search,color: Colors.white,),
+            icon: const Icon(Icons.search, color: Colors.white),
             onPressed: () => chatsController.signOut(),
           ),
-          // IconButton(
-          //   icon: const Icon(Icons.person_add_sharp),
-          //   onPressed: () => Get.to(const FriendsScreen()),
-          // ),
         ],
       ),
       drawer: Drawer(
-
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
+        child: Container(
+          color: Colors.grey[850],
           child: ListView(
-
-            children: const [
-              // DrawerHeader(child: Image.asset('assets/images/icons/splashlogo.png'))
-              ListTile(
-                tileColor: Colors.black,
-                leading: Icon(Icons.person_add,color: Colors.white,),
-                title: Text('Friends',style: TextStyle(
-                  color: Colors.white
-                ),),
-              ),
-              const SizedBox(height: 5 ),
-              ListTile(
-                tileColor: Colors.black,
-                leading: Icon(Icons.chat,
-                  color: Colors.white,
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.green[700]!, Colors.green[400]!],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                 ),
-                title: Text('Chats',
-                  style: TextStyle(
-                  color: Colors.white,)
-                  ,),
-              ),
-              const SizedBox(height: 5 ),
-
-              ListTile(
-                tileColor: Colors.black,
-                leading: Icon(Icons.settings,
-                  color: Colors.white,
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundImage: AssetImage('assets/images/icons/splashlogo.png'),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Chat App',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-                title: Text('SETTING',  style: TextStyle(
-                  color: Colors.white,)),
               ),
-              const SizedBox(height: 5 ),
-
-              ListTile(
-                tileColor: Colors.black,
-
-                leading: Icon(Icons.logout,
-                  color: Colors.white,
-                ),
-                title: Text('LOGOUT',  style: TextStyle(
-                  color: Colors.white,)),
-              )
+              _drawerTile(Icons.person_add, 'Friends', onTap: () => Get.to(const FriendsScreen())),
+              _drawerTile(Icons.chat, 'Chats'),
+              _drawerTile(Icons.settings, 'Settings'),
+              _drawerTile(Icons.logout, 'Logout', onTap: chatsController.signOut),
             ],
           ),
         ),
       ),
-      
       body: Stack(
         children: [
-          Image.asset(
-            fit: BoxFit.cover,
-              'assets/images/icons/imagechats.png'),
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/icons/imagechats.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          // Positioned.fill(
+          //   child: Container(
+          //     decoration: BoxDecoration(
+          //       gradient: LinearGradient(
+          //         colors: [Colors.grey.withOpacity(0.3), Colors.transparent],
+          //         begin: Alignment.topCenter,
+          //         end: Alignment.bottomCenter,
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Obx(() {
             if (chatsController.chats.isEmpty) {
-              return const Center(child: Text("No active chats"));
+              return const Center(
+                child: Text(
+                  "No active chats",
+                  style: TextStyle(color: Colors.grey, fontSize: 18),
+                ),
+              );
             }
-
             return ListView.builder(
               itemCount: chatsController.chats.length,
               itemBuilder: (context, index) {
@@ -106,32 +113,56 @@ class ChatsScreen extends StatelessWidget {
                 String otherPhotoUrl = chatData['otherUserPhotoUrl'].toString();
                 String otherUserId = currentUserId == user1Id ? user2Id : user1Id;
 
-                // Convert Firestore timestamp to DateTime
                 Timestamp lastMessageTimestamp = chatData['lastMessageTime'] as Timestamp;
                 DateTime lastMessageTime = lastMessageTimestamp.toDate();
-
                 String formattedTime = DateFormat('h:mm a').format(lastMessageTime);
 
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
                   child: Card(
-                    elevation: 3,
-                    color: Colors.grey[200],
+                    elevation: 6,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    color: Colors.white.withOpacity(0.9),
                     child: ListTile(
                       tileColor: Colors.greenAccent[50],
                       leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(30),
-                          child: Image.network(otherPhotoUrl)),
-                      title: Text(otherUserName),
-                      subtitle: Text(lastMessage,style: TextStyle(
-                          color: Colors.grey
-                      ),),
-                      trailing: Text(formattedTime,style: TextStyle(
-                          color: Colors.grey[400]
-                      ),),
-
+                        borderRadius: BorderRadius.circular(30),
+                        child: Image.network(
+                          otherPhotoUrl,
+                          width: 50,
+                          height: 50,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      title: Text(
+                        otherUserName,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        lastMessage,
+                        style: const TextStyle(color: Colors.grey),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      trailing: Text(
+                        formattedTime,
+                        style: TextStyle(
+                          color: Colors.grey[500],
+                          fontSize: 14,
+                        ),
+                      ),
                       onTap: () {
-                        Get.to(ChatScreen(otherUserId: otherUserId, otherUserName: otherUserName, otherPhotoUrl: otherPhotoUrl ));
+                        Get.to(ChatScreen(
+                          otherUserId: otherUserId,
+                          otherUserName: otherUserName,
+                          otherPhotoUrl: otherPhotoUrl,
+                        ));
                       },
                     ),
                   ),
@@ -139,15 +170,29 @@ class ChatsScreen extends StatelessWidget {
               },
             );
           }),
-        ]
-
+        ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Get.to(const FriendsScreen()),
+        backgroundColor: Colors.green[500],
+        elevation: 8,
+        child: const Icon(Icons.person_add_sharp, color: Colors.white),
+      ),
+    );
+  }
 
-
-
-      floatingActionButton: FloatingActionButton  (onPressed: () => Get.to(const FriendsScreen()),
-          backgroundColor: Colors.green,
-          child: const Icon(Icons.person_add_sharp,color: Colors.black,)),
+  ListTile _drawerTile(IconData icon, String title, {VoidCallback? onTap}) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.white),
+      title: Text(
+        title,
+        style: const TextStyle(color: Colors.white, fontSize: 16),
+      ),
+      onTap: onTap,
+      tileColor: Colors.black,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:talk_shalk/controllers/friends_controller.dart';
+import 'package:talk_shalk/screens/chat_screen.dart';
+
 import 'inbox_screen.dart';
 
 class FriendsScreen extends StatefulWidget {
@@ -13,70 +15,73 @@ class FriendsScreen extends StatefulWidget {
 class _FriendsScreenState extends State<FriendsScreen> {
   final FriendsController chatsController = Get.put(FriendsController());
   TextEditingController searchController = TextEditingController();
-  var searchQuery = ''.obs; // Observable for search input
+  var searchQuery = ''.obs;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         leading: IconButton(
-          onPressed: (){},
-          
-          icon: const Icon(Icons.arrow_back_rounded,color: Colors.white,) ),
-        
-        backgroundColor: Colors.black,
-        title: const Text('Friends',style: TextStyle(
-          color: Colors.white
-        ),),
-      ),
-      body: Container(
-
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, Colors.grey],
-            begin: Alignment.bottomRight,
-            end: Alignment.topLeft,
+          onPressed: () => Get.back(),
+          icon: const Icon(Icons.arrow_back_rounded, color: Colors.white),
+        ),
+        backgroundColor: Colors.green[600],
+        title: const Text(
+          'Friends',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
           ),
         ),
-
+      ),
+      body: Container(
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.white],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+          ),
+        ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
               // Search Bar
               TextField(
                 controller: searchController,
+                style: const TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  label: const Text('Search Friends',style: TextStyle(
-                    color: Colors.white
-                  ),),
-                  prefixIcon: const Icon(Icons.search,color: Colors.white,),
+                  labelText: 'Search Friends',
+                  labelStyle: TextStyle(color: Colors.black.withOpacity(0.8)),
+                  prefixIcon: const Icon(Icons.search, color: Colors.black),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25),
+                    borderRadius: BorderRadius.circular(20)
                   ),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 15),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                 ),
                 onChanged: (value) {
-                  searchQuery.value = value; // Update search query
+                  searchQuery.value = value;
                 },
               ),
               const SizedBox(height: 20),
               Obx(() {
                 if (chatsController.users.isEmpty) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator(color: Colors.white));
                 }
 
-                // Filter users based on search query
                 var filteredUsers = chatsController.users.where((user) {
                   var displayName = user['displayName']?.toLowerCase() ?? '';
                   return displayName.contains(searchQuery.value.toLowerCase());
                 }).toList();
 
                 if (filteredUsers.isEmpty) {
-                  return const Center(child: Text('No friends found'));
+                  return const Center(
+                    child: Text('No friends found',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  );
                 }
 
                 return Expanded(
@@ -89,13 +94,30 @@ class _FriendsScreenState extends State<FriendsScreen> {
                       }
 
                       return Card(
-                        color: Colors.black,
+                        color: Colors.green[700],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        elevation: 6,
+                        margin: const EdgeInsets.symmetric(vertical: 8),
                         child: ListTile(
                           leading: CircleAvatar(
+                            radius: 25,
                             backgroundImage: NetworkImage(user['photoURL']),
+                            backgroundColor: Colors.green[100],
                           ),
-                          title: Text(user['displayName'],style: const TextStyle(color: Colors.white),),
-                          subtitle: Text(user['email'],style: const TextStyle(color: Colors.white),),
+                          title: Text(
+                            user['displayName'],
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            user['email'],
+                            style: const TextStyle(color: Colors.white70, fontSize: 14),
+                          ),
                           onTap: () {
                             Get.to(() => ChatScreen(
                               otherUserId: user['uid'],
