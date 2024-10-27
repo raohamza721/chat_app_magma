@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:talk_shalk/controllers/friends_controller.dart';
-import 'package:talk_shalk/screens/chat_screen.dart';
-
 import 'inbox_screen.dart';
 
 class FriendsScreen extends StatefulWidget {

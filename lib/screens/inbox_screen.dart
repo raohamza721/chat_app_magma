@@ -9,7 +9,7 @@ class ChatScreen extends StatelessWidget {
 
   final InboxController chatController = Get.put(InboxController());
 
-  ChatScreen({super.key, required this.otherUserId, required this.otherUserName, required this.otherPhotoUrl});
+  ChatScreen({super.key, required this.otherUserId, required this.otherUserName, required this.otherPhotoUrl,});
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +35,7 @@ class ChatScreen extends StatelessWidget {
                       radius: 20,
                     ),
                     const SizedBox(width: 10),
-                    Text(
-                      otherUserName,
-                      style: const TextStyle(
-                        color: Colors.white,
+                    Text(otherUserName, style: const TextStyle(color: Colors.white,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -61,7 +58,11 @@ class ChatScreen extends StatelessWidget {
                       itemCount: messages.length,
                       itemBuilder: (context, index) {
                         var message = messages[index];
+
+
                         bool isSender = message['senderId'] == chatController.authController.firebaseUser.value!.uid;
+                        String? messageText = message.data().containsKey('text') ? message['text'] : null;
+                        String? imageUrl = message.data().containsKey('imageUrl') ? message['imageUrl'] : null;
 
                         return Align(
                           alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
@@ -84,13 +85,10 @@ class ChatScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: Text(
-                              message['text'],
-                              style: TextStyle(
-                                color: isSender ? Colors.white : Colors.black,
-                                fontSize: 16,
-                              ),
-                            ),
+                            child: messageText != null ? Text(messageText, style: TextStyle(
+                              color: isSender ? Colors.white : Colors.black,
+                              fontSize: 16,),) : (imageUrl != null ? Image.network(imageUrl, width: 150, fit: BoxFit.cover,
+                            ) : SizedBox.shrink()),
                           ),
                         );
                       },
@@ -103,6 +101,10 @@ class ChatScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                 child: Row(
                   children: [
+                    IconButton(
+                      icon: const Icon(Icons.image, color: Colors.green),
+                      onPressed: () => chatController.sendImageMessage(otherUserId, otherUserName, otherPhotoUrl),
+                    ),
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(

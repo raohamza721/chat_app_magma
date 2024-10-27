@@ -42,7 +42,8 @@ dependencies:
   get:
   intl:
   font_awesome_flutter:
-
+  image_picker:
+  firebase_storage:
 
 
 
