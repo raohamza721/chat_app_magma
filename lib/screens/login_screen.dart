@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -12,42 +11,24 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.greenAccent[200],
-      ),
       body: Stack(
         children: [
-          // Background image with blur effect
-          Positioned.fill(child: Image.asset('assets/images/icons/imagechats.png',
-              fit: BoxFit.cover,
-            ),
+          Positioned.fill(child: Image.asset('assets/images/icons/imagechats.png', fit: BoxFit.cover,),
           ),
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-              child: Container(color: Colors.greenAccent.withOpacity(0.3),
+          Center(child: Container(width: MediaQuery.of(context).size.width * 0.8,
+              padding: const EdgeInsets.all(30.0),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.9), // White background with some transparency
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
-            ),
-          ),
-          // Gradient overlay
-          // Positioned.fill(
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          //       gradient: LinearGradient(
-          //         colors: [Colors.black.withOpacity(0.5), Colors.transparent],
-          //         begin: Alignment.topCenter,
-          //         end: Alignment.bottomCenter,
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          // Main content
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
+              child: SingleChildScrollView(
+                child: Column(mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
                       height: 100,
@@ -56,61 +37,66 @@ class LoginScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     const Text('Welcome Back!', style: TextStyle(
-                        fontSize: 32,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 4.0,
-                            color: Colors.black26,
-                            offset: Offset(2, 2),
-                          ),
-                        ],
+                        color: Colors.black, // Change to black for better contrast
                       ),
                     ),
+
+                    const SizedBox(height: 20),
+                    const Text('Please sign in to continue', style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    const SizedBox(height: 50),
+                    Obx(() {
+                      if (authController.isLoading.value) {
+                        return const CircularProgressIndicator(color: Colors.black,);
+                      } else {
+                        return ElevatedButton(style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.redAccent,
+                            elevation: 10,
+                            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            shadowColor: Colors.redAccent.withOpacity(0.5),
+                          ),
+                          onPressed: () {authController.signInWithGoogle();},
+                          child: const Row(mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.google,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: 10),
+                              Text('Sign in with Google', style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    }),
+                    const SizedBox(height: 20),
+                    GestureDetector(
+                      onTap: () {
+                        // Navigate to email login screen
+                      }, child: const Text('Sign in with Email',
+                        style: TextStyle(
+                          color: Colors.black,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
                   ],
                 ),
-                const SizedBox(height: 200),
-                Obx(() {
-                  if (authController.isLoading.value) {
-                    return const CircularProgressIndicator(
-                      color: Colors.white,
-                    );
-                  } else {
-                    return ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.redAccent,
-                        elevation: 8,
-                        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        shadowColor: Colors.redAccent.withOpacity(0.5),
-                      ),
-                      onPressed: () {
-                        authController.signInWithGoogle();
-                      },
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            FontAwesomeIcons.google,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 10),
-                          Text('Sign in with Google',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-                }),
-              ],
+              ),
             ),
           ),
         ],
