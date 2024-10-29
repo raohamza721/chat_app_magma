@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 import 'package:talk_shalk/controllers/signing_screen_controlleer.dart';
 import 'package:talk_shalk/screens/splash_screen.dart';
 
-import 'screens/login_screen.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

@@ -1,24 +1,26 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:talk_shalk/controllers/chats_controllers.dart';
-import 'package:talk_shalk/screens/friends_screen.dart';
+
+import '../controllers/chats_controllers.dart';
+import 'friends_screen.dart';
 import 'inbox_screen.dart';
 
-class ChatsScreen extends StatelessWidget {
+class chats extends StatelessWidget {
+   chats({super.key});
   final ChatsController chatsController = Get.put(ChatsController());
-
-  ChatsScreen({super.key,});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[200],
-      appBar: AppBar(
+    return Obx(() => Scaffold(
+      appBar: (chatsController.selectedIndex.value == 1 || chatsController.selectedIndex.value == 2)
+          ? null
+          : AppBar(
+
         backgroundColor: Colors.green[500],
-        title: const Text("Chats",
-          style: TextStyle(
+        title: const Text("Chats", style: TextStyle(
             color: Colors.white,
             fontSize: 22,
             fontWeight: FontWeight.bold,
@@ -31,6 +33,7 @@ class ChatsScreen extends StatelessWidget {
           ),
         ],
       ),
+
       drawer: Drawer(
         child: Container(
           color: Colors.grey[850],
@@ -53,9 +56,7 @@ class ChatsScreen extends StatelessWidget {
                       backgroundImage: AssetImage('assets/images/icons/splashlogo.png'),
                     ),
                     SizedBox(height: 10),
-                    Text(
-                      'Chat App',
-                      style: TextStyle(
+                    Text('Chat App', style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -72,11 +73,11 @@ class ChatsScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Stack(
+
+      body:  Stack(
         children: [
           Positioned.fill(
-            child: Image.asset(
-              'assets/images/icons/imagechats.png',
+            child: Image.asset('assets/images/icons/imagechats.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -178,21 +179,23 @@ class ChatsScreen extends StatelessWidget {
         elevation: 8,
         child: const Icon(Icons.person_add_sharp, color: Colors.white),
       ),
-    );
-  }
+    ));
 
-  ListTile _drawerTile(IconData icon, String title, {VoidCallback? onTap}) {
-    return ListTile(
-      leading: Icon(icon, color: Colors.white),
-      title: Text(
-        title,
-        style: const TextStyle(color: Colors.white, fontSize: 16),
-      ),
-      onTap: onTap,
-      tileColor: Colors.black,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-    );
+
+
   }
+   ListTile _drawerTile(IconData icon, String title, {VoidCallback? onTap}) {
+     return ListTile(
+       leading: Icon(icon, color: Colors.white),
+       title: Text(
+         title,
+         style: const TextStyle(color: Colors.white, fontSize: 16),
+       ),
+       onTap: onTap,
+       tileColor: Colors.black,
+       shape: RoundedRectangleBorder(
+         borderRadius: BorderRadius.circular(10),
+       ),
+     );
+   }
 }

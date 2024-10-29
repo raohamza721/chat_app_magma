@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
           Center(child: Container(width: MediaQuery.of(context).size.width * 0.8,
               padding: const EdgeInsets.all(30.0),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.9), // White background with some transparency
+                color: Colors.white.withOpacity(0.9),
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [BoxShadow(
                     color: Colors.black.withOpacity(0.2),
@@ -39,7 +39,7 @@ class LoginScreen extends StatelessWidget {
                     const Text('Welcome Back!', style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black, // Change to black for better contrast
+                        color: Colors.black,
                       ),
                     ),
 

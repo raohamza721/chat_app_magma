@@ -24,9 +24,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
           icon: const Icon(Icons.arrow_back_rounded, color: Colors.white),
         ),
         backgroundColor: Colors.green[600],
-        title: const Text(
-          'Friends',
-          style: TextStyle(
+        title: const Text('Friends', style: TextStyle(
             color: Colors.white,
             fontSize: 22,
             fontWeight: FontWeight.bold,
@@ -104,8 +102,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                             backgroundImage: NetworkImage(user['photoURL']),
                             backgroundColor: Colors.green[100],
                           ),
-                          title: Text(
-                            user['displayName'],
+                          title: Text(user['displayName'],
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 18,

@@ -8,6 +8,8 @@ class ChatsController extends GetxController {
   var chats = <QueryDocumentSnapshot>[].obs;  // Observable for active chats
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+
+
   @override
   void onInit() {
     super.onInit();
@@ -35,5 +37,12 @@ class ChatsController extends GetxController {
   void signOut() async {
     await _auth.signOut();
     Get.offAll(LoginScreen());
+
+  }
+
+  final selectedIndex = 0.obs;
+
+  void onItemSelect(int index){
+     selectedIndex.value = index;
   }
 }

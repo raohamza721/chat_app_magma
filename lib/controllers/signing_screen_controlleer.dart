@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../screens/chat_screen.dart';
+import '../screens/bottomNavScreen.dart';
 import '../screens/login_screen.dart';
 
 class AuthController extends GetxController {
@@ -44,10 +44,11 @@ class AuthController extends GetxController {
           'displayName': user.displayName,
           'email': user.email,
           'photoURL': user.photoURL,
+          'about': '',
         }, SetOptions(merge: true));
       }
 
-      Get.to(() => ChatsScreen());
+      Get.to(() => BottomNavBarScreen());
     } catch (e) {
       print(e);
     } finally {
