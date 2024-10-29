@@ -13,6 +13,7 @@ class BottomNavBarScreen extends StatelessWidget {
   BottomNavBarScreen({super.key,});
   final List<Widget> navScreens = [
     chats(),
+    updates(),
     const SettingsScreen (),
     const UserProfile (),
   ];
@@ -37,6 +38,10 @@ class BottomNavBarScreen extends StatelessWidget {
             label: 'Chats',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.update_outlined),
+            label: 'Updates',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Setting',
           ),
@@ -47,6 +52,7 @@ class BottomNavBarScreen extends StatelessWidget {
         ],
         currentIndex: chatsController.selectedIndex.value,
         selectedItemColor: Colors.green[500],
+        unselectedItemColor: Colors.grey,
         onTap: chatsController.onItemSelect,
         backgroundColor: Colors.grey[100],
       )),
@@ -54,6 +60,19 @@ class BottomNavBarScreen extends StatelessWidget {
   }
 
 
+}
+
+class updates extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+
+        title: Text('Updates',style: TextStyle(color: Colors.white),),
+      ),
+    );
+  }
 }
 
 

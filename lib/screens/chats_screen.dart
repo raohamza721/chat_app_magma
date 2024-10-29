@@ -15,7 +15,7 @@ class chats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-      appBar: (chatsController.selectedIndex.value == 1 || chatsController.selectedIndex.value == 2)
+      appBar: (chatsController.selectedIndex.value == 1 || chatsController.selectedIndex.value == 2 || chatsController.selectedIndex.value == 3)
           ? null
           : AppBar(
 
