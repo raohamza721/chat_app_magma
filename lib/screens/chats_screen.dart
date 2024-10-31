@@ -15,10 +15,8 @@ class chats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-      appBar: (chatsController.selectedIndex.value == 1 || chatsController.selectedIndex.value == 2 || chatsController.selectedIndex.value == 3)
-          ? null
-          : AppBar(
-
+      appBar: (chatsController.selectedIndex.value == 1 || chatsController.selectedIndex.value == 2
+          || chatsController.selectedIndex.value == 3) ? null : AppBar(
         backgroundColor: Colors.green[500],
         title: const Text("Chats", style: TextStyle(
             color: Colors.white,
@@ -151,10 +149,8 @@ class chats extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      trailing: Text(
-                        formattedTime,
-                        style: TextStyle(
-                          color: Colors.grey[500],
+                      trailing: Text(formattedTime, style: TextStyle(
+                        color: Colors.grey[500],
                           fontSize: 14,
                         ),
                       ),

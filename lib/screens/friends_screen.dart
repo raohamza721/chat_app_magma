@@ -7,10 +7,10 @@ class FriendsScreen extends StatefulWidget {
   const FriendsScreen({super.key});
 
   @override
-  _FriendsScreenState createState() => _FriendsScreenState();
+  FriendsScreenState createState() => FriendsScreenState();
 }
 
-class _FriendsScreenState extends State<FriendsScreen> {
+class FriendsScreenState extends State<FriendsScreen> {
   final FriendsController chatsController = Get.put(FriendsController());
   TextEditingController searchController = TextEditingController();
   var searchQuery = ''.obs;

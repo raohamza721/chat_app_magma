@@ -9,7 +9,6 @@ class ChatsController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
 
-
   @override
   void onInit() {
     super.onInit();
@@ -31,6 +30,9 @@ class ChatsController extends GetxController {
       chats.addAll(snapshot.docs);
     });
   }
+
+
+
 
   User? get currentUser => _auth.currentUser;
 

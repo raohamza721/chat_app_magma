@@ -13,8 +13,7 @@ class InboxController extends GetxController {
   String getChatId(String otherUserId) {
     String currentUserId = authController.firebaseUser.value!.uid;
     return currentUserId.hashCode <= otherUserId.hashCode
-        ? '$currentUserId-$otherUserId'
-        : '$otherUserId-$currentUserId';
+        ? '$currentUserId-$otherUserId' : '$otherUserId-$currentUserId';
   }
 
   // Send a text message
@@ -73,8 +72,12 @@ class InboxController extends GetxController {
     }
   }
 
+  // void blockUser(String otherUserId){
+  //   return
+  // }
+
   // Stream to get messages
-  Stream<QuerySnapshot> getMessages(String otherUserId) {
+   Stream<QuerySnapshot> getMessages(String otherUserId) {
     return FirebaseFirestore.instance.collection('chats').doc(getChatId(otherUserId))
         .collection('messages')
         .orderBy('timestamp', descending: true)

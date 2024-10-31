@@ -63,12 +63,12 @@ class _UserProfileState extends State<UserProfile> {
             ),
 
              ListTile(
-              leading: Icon(Icons.abc_sharp),
-              title: Text('About',style: TextStyle(
+              leading: const Icon(Icons.abc_sharp),
+              title: const Text('About',style: TextStyle(
                   color: Colors.grey,
                   fontSize: 12
               ),),
-              subtitle: Text(user['about'],style: TextStyle(
+              subtitle: Text(user['about'],style: const TextStyle(
                   color: Colors.blueGrey
               ),),
             ),

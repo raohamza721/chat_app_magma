@@ -18,8 +18,7 @@ class ChatScreen extends StatelessWidget {
         children: [
           // Background Image
           Positioned.fill(
-            child: Image.asset(
-              'assets/images/icons/imagechats.png',
+            child: Image.asset('assets/images/icons/imagechats.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -42,6 +41,34 @@ class ChatScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+                actions: [
+                  
+                  PopupMenuButton(itemBuilder: (context)=> [
+                    const PopupMenuItem(
+                      value: 1,
+                        child: Row(
+                      children: [
+                        Icon(Icons.block),
+                        Text('Block user')
+                      ],
+                    )),
+                    const PopupMenuItem(
+                        value: 2,
+                        child: Row(
+                          children: [
+                            Icon(Icons.clear),
+                            Text('clear chat')
+                          ],
+                        )),],
+
+                    elevation: 2,
+                    onSelected: (value){
+                    if(value == 1){
+                    }
+                    },
+                  ),
+
+                ],
               ),
               Expanded(
                 child: StreamBuilder(
@@ -88,7 +115,7 @@ class ChatScreen extends StatelessWidget {
                             child: messageText != null ? Text(messageText, style: TextStyle(
                               color: isSender ? Colors.white : Colors.black,
                               fontSize: 16,),) : (imageUrl != null ? Image.network(imageUrl, width: 150, fit: BoxFit.cover,
-                            ) : SizedBox.shrink()),
+                            ) : const SizedBox.shrink()),
                           ),
                         );
                       },
@@ -140,4 +167,5 @@ class ChatScreen extends StatelessWidget {
       ),
     );
   }
+  
 }

@@ -1,14 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-
-
-
-
-
-
-
-
 
 
 
@@ -20,9 +10,9 @@ class SettingsScreen extends StatelessWidget  {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.green,
-        title: Text('SETTING',style: TextStyle(color: Colors.white),),
+        title: const Text('SETTING',style: TextStyle(color: Colors.white),),
       ),
-      body: Center(child: Text('Setting')),
+      body: const Center(child: Text('Setting')),
     );
   }
   const SettingsScreen({super.key});
