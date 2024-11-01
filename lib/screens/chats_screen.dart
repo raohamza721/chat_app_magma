@@ -93,8 +93,7 @@ class chats extends StatelessWidget {
           Obx(() {
             if (chatsController.chats.isEmpty) {
               return const Center(
-                child: Text(
-                  "No active chats",
+                child: Text("No active chats",
                   style: TextStyle(color: Colors.grey, fontSize: 18),
                 ),
               );
@@ -111,6 +110,11 @@ class chats extends StatelessWidget {
                 String otherUserName = chatData['otherUserName'].toString();
                 String otherPhotoUrl = chatData['otherUserPhotoUrl'].toString();
                 String otherUserId = currentUserId == user1Id ? user2Id : user1Id;
+
+                String isUserBlocked = chatData['UserBlocked'];
+                // if (chatData['UserBlocked'] == 'blocked') {
+                //   return Container();
+                // }
 
                 Timestamp lastMessageTimestamp = chatData['lastMessageTime'] as Timestamp;
                 DateTime lastMessageTime = lastMessageTimestamp.toDate();
@@ -129,30 +133,39 @@ class chats extends StatelessWidget {
                       tileColor: Colors.greenAccent[50],
                       leading: ClipRRect(
                         borderRadius: BorderRadius.circular(30),
-                        child: Image.network(
-                          otherPhotoUrl,
+                        child: Image.network(otherPhotoUrl,
                           width: 50,
                           height: 50,
                           fit: BoxFit.cover,
                         ),
                       ),
-                      title: Text(
-                        otherUserName,
+                      title: Text(otherUserName,
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      subtitle: Text(
-                        lastMessage,
+                      subtitle: Text(lastMessage,
                         style: const TextStyle(color: Colors.grey),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      trailing: Text(formattedTime, style: TextStyle(
-                        color: Colors.grey[500],
-                          fontSize: 14,
-                        ),
+                      trailing: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text(formattedTime, style: TextStyle(
+                            color: Colors.grey[500],
+                              fontSize: 14,
+                            ),
+                          ),
+
+                          Text(isUserBlocked, style: TextStyle(
+                            color: Colors.red[500],
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold
+                          ),
+                          ),
+                        ],
                       ),
                       onTap: () {
                         Get.to(ChatScreen(

@@ -11,6 +11,8 @@ class ChatScreen extends StatelessWidget {
 
   ChatScreen({super.key, required this.otherUserId, required this.otherUserName, required this.otherPhotoUrl,});
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,13 +46,12 @@ class ChatScreen extends StatelessWidget {
                 actions: [
                   
                   PopupMenuButton(itemBuilder: (context)=> [
-                    const PopupMenuItem(
+                    PopupMenuItem(
                       value: 1,
                         child: Row(
                       children: [
-                        Icon(Icons.block),
-                        Text('Block user')
-                      ],
+                        const Icon(Icons.block),
+                        Text(chatController.isUserBlocked.value ? 'Unblock user' : 'Block user'),                      ],
                     )),
                     const PopupMenuItem(
                         value: 2,
@@ -59,15 +60,16 @@ class ChatScreen extends StatelessWidget {
                             Icon(Icons.clear),
                             Text('clear chat')
                           ],
-                        )),],
+                        )),
+                  ],
 
                     elevation: 2,
                     onSelected: (value){
                     if(value == 1){
+                      chatController.toggleBlockUser(otherUserId);
                     }
                     },
                   ),
-
                 ],
               ),
               Expanded(
@@ -123,10 +125,16 @@ class ChatScreen extends StatelessWidget {
                   },
                 ),
               ),
-              Container(
+              Obx(() => Container(
                 color: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                child: Row(
+                child: chatController.isUserBlocked.value
+                    ? const Center(
+                  child: Text('User is blocked',
+                    style: TextStyle(color: Colors.red, fontSize: 16),
+                  ),
+                )
+                    : Row(
                   children: [
                     IconButton(
                       icon: const Icon(Icons.image, color: Colors.green),
@@ -160,7 +168,8 @@ class ChatScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
+              )),
+
             ],
           ),
         ],
