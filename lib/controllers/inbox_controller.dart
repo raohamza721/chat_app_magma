@@ -51,8 +51,7 @@ class InboxController extends GetxController {
 
 
   // Send a text message
-      void sendMessage(String otherUserId, String otherUserName,
-          String otherPhotoUrl) {
+      void sendMessage(String otherUserId, String otherUserName, String otherPhotoUrl) {
         String message = messageController.text.trim();
         if (message.isNotEmpty) {
           String chatId = getChatId(otherUserId);
@@ -78,8 +77,7 @@ class InboxController extends GetxController {
       }
 
       // Send an image message
-      Future<void> sendImageMessage(String otherUserId, String otherUserName,
-          String otherPhotoUrl) async {
+      Future<void> sendImageMessage(String otherUserId, String otherUserName, String otherPhotoUrl) async {
         final picker = ImagePicker();
         final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
@@ -110,6 +108,40 @@ class InboxController extends GetxController {
           }
         }
       }
+
+
+  Future<void> sendCameraMessage(String otherUserId, String otherUserName,
+      String otherPhotoUrl) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      File file = File(pickedFile.path);
+      String filePath = 'chat_images/${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+      try {
+        UploadTask uploadTask = FirebaseStorage.instance.ref(filePath).putFile(file);
+        TaskSnapshot snapshot = await uploadTask;
+        String cameraImageUrl = await snapshot.ref.getDownloadURL();
+
+        String chatId = getChatId(otherUserId);
+        FirebaseFirestore.instance.collection('chats').doc(chatId).collection('messages').add({
+          'CameraImageUrl': cameraImageUrl,
+          'senderId': authController.firebaseUser.value!.uid,
+          'timestamp': DateTime.now(),
+        });
+
+        FirebaseFirestore.instance.collection('chats').doc(chatId).update({
+          'lastMessage': '[Image]',
+          'lastMessageTime': FieldValue.serverTimestamp(),
+        });
+      } catch (e) {
+        if (kDebugMode) {
+          print("Error uploading image: $e");
+        }
+      }
+    }
+  }
 
 
 

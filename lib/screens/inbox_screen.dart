@@ -92,6 +92,8 @@ class ChatScreen extends StatelessWidget {
                         bool isSender = message['senderId'] == chatController.authController.firebaseUser.value!.uid;
                         String? messageText = message.data().containsKey('text') ? message['text'] : null;
                         String? imageUrl = message.data().containsKey('imageUrl') ? message['imageUrl'] : null;
+                        String? cameraImageUrl = message.data().containsKey('CameraImageUrl') ? message['CameraImageUrl'] : null;
+
 
                         return Align(
                           alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
@@ -114,11 +116,10 @@ class ChatScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: messageText != null ? Text(messageText, style: TextStyle(
-                              color: isSender ? Colors.white : Colors.black,
-                              fontSize: 16,),) : (imageUrl != null ? Image.network(imageUrl, width: 150, fit: BoxFit.cover,
-                            ) : const SizedBox.shrink()),
-                          ),
+                            child: messageText != null ? Text(messageText, style: TextStyle(color: isSender ? Colors.white : Colors.black, fontSize: 16,),)
+                                : imageUrl != null ? Image.network(imageUrl, width: 150, fit: BoxFit.cover,)
+                            : cameraImageUrl != null ? Image.network(cameraImageUrl, width: 150, fit: BoxFit.cover,)
+                            : const SizedBox.shrink(),),
                         );
                       },
                     );
@@ -139,6 +140,10 @@ class ChatScreen extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.image, color: Colors.green),
                       onPressed: () => chatController.sendImageMessage(otherUserId, otherUserName, otherPhotoUrl),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.camera, color: Colors.green),
+                      onPressed: () => chatController.sendCameraMessage(otherUserId, otherUserName, otherPhotoUrl),
                     ),
                     Expanded(
                       child: Container(

@@ -84,6 +84,7 @@ class ProfileEditScreen extends StatelessWidget {
               TextFormField(
                 controller: emailController,
                 decoration: const InputDecoration(
+
                   labelText: 'Email',
                   border: OutlineInputBorder(),
                 ),
