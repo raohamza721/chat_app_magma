@@ -98,7 +98,7 @@ class InboxController extends GetxController {
             });
 
             FirebaseFirestore.instance.collection('chats').doc(chatId).update({
-              'lastMessage': '[Image]',
+              'lastMessage': 'Image',
               'lastMessageTime': FieldValue.serverTimestamp(),
             });
           } catch (e) {
@@ -132,7 +132,7 @@ class InboxController extends GetxController {
         });
 
         FirebaseFirestore.instance.collection('chats').doc(chatId).update({
-          'lastMessage': '[Image]',
+          'lastMessage': 'Camera Image',
           'lastMessageTime': FieldValue.serverTimestamp(),
         });
       } catch (e) {

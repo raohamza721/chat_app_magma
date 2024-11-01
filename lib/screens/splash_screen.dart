@@ -33,10 +33,14 @@ class _SplashScreenState extends State<SplashScreen> {
               height: 120, width: 120,
       child: Image.asset('assets/images/icons/splashlogo.png')),
           const SizedBox(height: 10,),
-          const Text('Talk Shalk',style: TextStyle(
-            color: Colors.green,
-            fontSize: 20,
-            fontWeight: FontWeight.bold
+          RichText(
+            softWrap: false
+            ,
+            text: const TextSpan(
+            children: [
+              TextSpan(text: 'Talk', style: TextStyle(color: Colors.red,)),
+              TextSpan(text: 'Shalk', style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold)),
+            ]
           ),)
         ],
       )),
