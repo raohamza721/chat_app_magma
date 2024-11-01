@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:talk_shalk/controllers/chats_controllers.dart';
-import 'package:talk_shalk/screens/friends_screen.dart';
 import 'package:talk_shalk/screens/setting.dart';
 import 'package:talk_shalk/screens/user_profile.dart';
 import 'chats_screen.dart';
@@ -12,8 +10,8 @@ class BottomNavBarScreen extends StatelessWidget {
 
   BottomNavBarScreen({super.key,});
   final List<Widget> navScreens = [
-    chats(),
-    updates(),
+    Chats(),
+    const Updates(),
     const SettingsScreen (),
     const UserProfile (),
   ];
@@ -62,14 +60,16 @@ class BottomNavBarScreen extends StatelessWidget {
 
 }
 
-class updates extends StatelessWidget {
+class Updates extends StatelessWidget {
+  const Updates({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
 
-        title: Text('Updates',style: TextStyle(color: Colors.white),),
+        title: const Text('Updates',style: TextStyle(color: Colors.white),),
       ),
     );
   }

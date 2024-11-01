@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,8 +15,7 @@ class InboxController extends GetxController {
 
   String getChatId(String otherUserId) {
     String currentUserId = authController.firebaseUser.value!.uid;
-    return currentUserId.hashCode <= otherUserId.hashCode
-        ? '$currentUserId-$otherUserId' : '$otherUserId-$currentUserId';
+    return currentUserId.hashCode <= otherUserId.hashCode ? '$currentUserId-$otherUserId' : '$otherUserId-$currentUserId';
   }
 
   // // Method to block a user
@@ -29,6 +29,7 @@ class InboxController extends GetxController {
   // }
 
   // Method to block or unblock a user
+
   void toggleBlockUser(String otherUserId) {
     String chatId = getChatId(otherUserId);
     if (isUserBlocked.value) {
@@ -103,7 +104,9 @@ class InboxController extends GetxController {
               'lastMessageTime': FieldValue.serverTimestamp(),
             });
           } catch (e) {
-            print("Error uploading image: $e");
+            if (kDebugMode) {
+              print("Error uploading image: $e");
+            }
           }
         }
       }

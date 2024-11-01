@@ -10,7 +10,7 @@ class ProfileEditScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     final TextEditingController nameController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
     final TextEditingController aboutController = TextEditingController();
@@ -28,7 +28,7 @@ class ProfileEditScreen extends StatelessWidget {
 
 
     void saveProfile() {
-      if (_formKey.currentState!.validate()) {
+      if (formKey.currentState!.validate()) {
         profileController.updateUserProfile(
           userId: profileController.currentUser!.uid,
           name: nameController.text,
@@ -50,7 +50,7 @@ class ProfileEditScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
-          key: _formKey,
+          key: formKey,
           child: ListView(
             children: [
               GestureDetector(

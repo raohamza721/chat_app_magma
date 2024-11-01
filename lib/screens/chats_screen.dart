@@ -8,8 +8,8 @@ import '../controllers/chats_controllers.dart';
 import 'friends_screen.dart';
 import 'inbox_screen.dart';
 
-class chats extends StatelessWidget {
-   chats({super.key});
+class Chats extends StatelessWidget {
+   Chats({super.key});
   final ChatsController chatsController = Get.put(ChatsController());
 
   @override
@@ -102,7 +102,7 @@ class chats extends StatelessWidget {
               itemCount: chatsController.chats.length,
               itemBuilder: (context, index) {
                 var chatData = chatsController.chats[index].data() as Map<String, dynamic>;
-                String chatId = chatData['chatId'];
+                // String chatId = chatData['chatId'];
                 String lastMessage = chatData['lastMessage'];
                 String user1Id = chatData['user1Id'];
                 String user2Id = chatData['user2Id'];
@@ -153,6 +153,7 @@ class chats extends StatelessWidget {
                       trailing: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
+                          const SizedBox(height: 10,),
                           Text(formattedTime, style: TextStyle(
                             color: Colors.grey[500],
                               fontSize: 14,
