@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:talk_shalk/screens/profile_edit_screen.dart';
 import '../controllers/profile_controller.dart';
 
@@ -47,8 +48,10 @@ class _UserProfileState extends State<UserProfile> {
             const Center(
                child:   CircleAvatar(
                     radius: 80, child: Icon(Icons.person,size: 60,))) :
-            CircleAvatar(
-             radius: 80, backgroundImage: NetworkImage(user['photoURL']),
+            InstaImageViewer(imageUrl: user['photoURL'],
+              child: CircleAvatar(
+               radius: 80, backgroundImage: NetworkImage(user['photoURL']),
+              ),
             ),
             const SizedBox(height: 30,),
             ListTile(

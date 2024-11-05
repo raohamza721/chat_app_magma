@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:talk_shalk/controllers/inbox_controller.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -31,9 +32,11 @@ class ChatScreen extends StatelessWidget {
                 backgroundColor: Colors.green[500],
                 title: Row(
                   children: [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(otherPhotoUrl),
-                      radius: 20,
+                    InstaImageViewer(imageUrl: otherPhotoUrl,
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(otherPhotoUrl),
+                        radius: 20,
+                      ),
                     ),
                     const SizedBox(width: 10),
                     Text(otherUserName, style: const TextStyle(color: Colors.white,
