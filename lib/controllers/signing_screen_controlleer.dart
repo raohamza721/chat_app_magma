@@ -49,7 +49,7 @@ class AuthController extends GetxController {
         }, SetOptions(merge: true));
       }
 
-      Get.to(() => BottomNavBarScreen());
+      Get.offAll(() => BottomNavBarScreen());
     } catch (e) {
       if (kDebugMode) {
         print(e);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:talk_shalk/controllers/inbox_controller.dart';
+import 'package:talk_shalk/screens/chats_screen.dart';
 
 class ChatScreen extends StatelessWidget {
   final String otherUserId;
@@ -29,6 +30,9 @@ class ChatScreen extends StatelessWidget {
           Column(
             children: [
               AppBar(
+                leading: IconButton(onPressed: (){
+                  Get.offAll(Chats());
+                }, icon: Icon(Icons.arrow_back_rounded)),
                 backgroundColor: Colors.green[500],
                 title: Row(
                   children: [
@@ -177,7 +181,6 @@ class ChatScreen extends StatelessWidget {
                   ],
                 ),
               )),
-
             ],
           ),
         ],
