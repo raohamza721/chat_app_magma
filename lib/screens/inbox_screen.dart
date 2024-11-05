@@ -4,6 +4,8 @@ import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:talk_shalk/controllers/inbox_controller.dart';
 import 'package:talk_shalk/screens/chats_screen.dart';
 
+import 'bottomNavScreen.dart';
+
 class ChatScreen extends StatelessWidget {
   final String otherUserId;
   final String otherUserName;
@@ -31,8 +33,8 @@ class ChatScreen extends StatelessWidget {
             children: [
               AppBar(
                 leading: IconButton(onPressed: (){
-                  Get.offAll(Chats());
-                }, icon: Icon(Icons.arrow_back_rounded)),
+                  Get.offAll(BottomNavBarScreen());
+                }, icon: const Icon(Icons.arrow_back_rounded)),
                 backgroundColor: Colors.green[500],
                 title: Row(
                   children: [

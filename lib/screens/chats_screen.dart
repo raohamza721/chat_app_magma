@@ -201,8 +201,8 @@ class Chats extends StatelessWidget {
          title,
          style: const TextStyle(color: Colors.white, fontSize: 16),
        ),
-       onTap: onTap,
        tileColor: Colors.black,
+       onTap: onTap,
        shape: RoundedRectangleBorder(
          borderRadius: BorderRadius.circular(10),
        ),
