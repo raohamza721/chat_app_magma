@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:talk_shalk/controllers/inbox_controller.dart';
-import 'package:talk_shalk/screens/chats_screen.dart';
 
 import 'bottomNavScreen.dart';
 
