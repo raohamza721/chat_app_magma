@@ -120,8 +120,8 @@ class ChatScreen extends StatelessWidget {
                               ],
                             ),
                             child: messageText != null ? Text(messageText, style: TextStyle(color: isSender ? Colors.white : Colors.black, fontSize: 16,),)
-                                : imageUrl != null ? Image.network(imageUrl, width: 150, fit: BoxFit.cover,)
-                            : cameraImageUrl != null ? Image.network(cameraImageUrl, width: 150, fit: BoxFit.cover,)
+                                : imageUrl != null ? InstaImageViewer(imageUrl:imageUrl,child: Image.network(imageUrl, width: 150, fit: BoxFit.cover,))
+                            : cameraImageUrl != null ?  InstaImageViewer(imageUrl:cameraImageUrl,child: Image.network(cameraImageUrl, width: 150, fit: BoxFit.cover,))
                             : const SizedBox.shrink(),),
                         );
                       },
